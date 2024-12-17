@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#FFFFFF"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Back button and Favorite Icon -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp">
+
+            <!-- Back button -->
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/baseline_arrow_back_24"
+                android:layout_gravity="center|start"
+                android:contentDescription="Back" />
+
+            <!-- Favorite button -->
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@drawable/baseline_favorite_24"
+                android:contentDescription="Favorite"
+                android:layout_gravity="center|end"/>
+        </FrameLayout>
+
+        <!-- Product Image -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:src="@drawable/shoes_3"
+            android:scaleType="centerInside"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Thumbnail Images -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="8dp">
+
+            <com.bemo.product.option.ImagePickerView
+                android:id="@+id/imagePickerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="16dp">
+
+            </com.bemo.product.option.ImagePickerView>
+        </HorizontalScrollView>
+
+
+
+
+        <!-- Rating -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+            <!-- Product Details -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="NIKE AIR MAX 200"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:layout_marginBottom="8dp" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_gravity="end"
+                android:gravity="end">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$240"
+                    android:textSize="18sp"
+                    android:textColor="#FF6F00"
+                    android:layout_marginBottom="8dp" />
+                <RatingBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:rating="4.5"
+                    android:isIndicator="true"
+                    style="@style/Widget.AppCompat.RatingBar.Small" />
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <!-- Available Sizes -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Available Sizes"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:layout_marginBottom="8dp" />
+
+        <com.bemo.product.option.SizePickerView
+            android:id="@+id/sizePicker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:selectedTextColor="#FFF"
+            app:defaultTextColor="#000"
+            app:indicatorColor="#FF6F00"
+            app:defaultSelectedIndex="2"
+            app:textSize="5sp"
+            app:boxRadius="10"
+            app:indicatorPadding="8dp" />
+
+        <!-- Color Selection -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Color"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:layout_marginVertical="8dp" />
+
+        <com.bemo.product.option.ColorPickerView
+            android:id="@+id/colorPickerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#F8F8F8"
+            app:indicatorColor="#FF0000"
+            app:scrollbarVisibility="false"
+            app:radius="13dp"
+            android:padding="2dp"
+            app:defaultSelectedIndex="1"
+            app:circleSize="8dp"
+            app:indicatorSize="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingClass" />
+
+
+        <!-- Description -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description"
+            android:textSize="14sp"
+            android:textColor="#000"
+            android:layout_marginVertical="8dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Inspired by the energy flows on Earth..."
+            android:textSize="12sp"
+            android:textColor="#666" />
+
+        <!-- Add to Cart Button -->
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:text="Add to Cart"
+            android:background="@drawable/button_add_to_cart"
+            android:textColor="#FFF"
+            android:layout_marginTop="16dp" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

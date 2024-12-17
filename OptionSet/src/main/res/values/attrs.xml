@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ColorPickerView">
+        <attr name="indicatorColor" format="color" />
+        <attr name="defaultSelectedIndex" format="integer" />
+        <attr name="backgroundColor" format="color" />
+        <attr name="scrollbarVisibility" format="boolean" />
+        <attr name="radius" format="dimension" />
+        <attr name="circleSize" format="dimension" />
+        <attr name="indicatorSize" format="dimension" />
+    </declare-styleable>
+
+    <declare-styleable name="SizePickerView">
+        <attr name="selectedTextColor" format="color" />
+        <attr name="defaultTextColor" format="color" />
+        <attr name="textSize" format="dimension" />
+        <attr name="indicatorPadding" format="dimension" />
+        <attr name="boxWidth" format="integer"/>
+        <attr name="boxHeight" format="integer"/>
+        <attr name="boxRadius" format="integer" />
+
+    </declare-styleable>
+    <declare-styleable name="ImagePickerView">
+        <attr name="selectedColor" format="color" />
+        <attr name="defaultColor" format="color" />
+        <attr name="imageWidth" format="integer" />
+        <attr name="imageHeight" format="integer" />
+        <attr name="imageRadius" format="integer" />
+    </declare-styleable>
+
+</resources>
