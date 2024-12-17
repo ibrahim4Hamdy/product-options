@@ -11,8 +11,7 @@
 This library simplifies adding product options such as colors, sizes, and images with smooth user interaction.
 
 ## Screen Shot
-<img src="https://github.com/ibrahim4Hamdy/Random-Finger-Games/blob/master/random_finger_games/screen_shot/Screenshot_20241216_201540_com.example.random_finger_games.jpg" width="300" />
-<img src="https://github.com/ibrahim4Hamdy/Random-Finger-Games/blob/master/random_finger_games/screen_shot/Screenshot_20241216_201557_com.example.random_finger_games.jpg" width="300"/>
+<img src="https://github.com/ibrahim4Hamdy/product-options/blob/master/screenshot/1.jpg" width="300" /> <img src="https://github.com/ibrahim4Hamdy/product-options/blob/master/screenshot/2.jpg" width="300"/>
 
 
 ---
