@@ -1,7 +1,10 @@
 plugins {
     id("com.android.library")
-}
+    id("maven-publish")
 
+}
+group = "com.github.ibrahim4Hamdy"
+version = "0.0.2-alpha"
 android {
     namespace = "com.bemo.product.option"
     compileSdk = 34
@@ -24,8 +27,46 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
+}
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))      // << --- ADD This
+    }
+}
+//===============================
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17            // << --- ADD This
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            groupId = "com.github.ibrahim4Hamdy"
+            artifactId = "product-options"
+            version = "0.0.2-alpha"
+            afterEvaluate {
+                from(components["release"])
+//                artifact("sourcesJar")
+//                artifact("javadocJar")
+//                tasks.register("prepareReleaseJar", Jar::class.java) {
+//                    from(android.sourceSets["main"].java.srcDirs)
+//                    archiveClassifier.set("classes")
+//                }
+            }
+
+        }
+
+    }
+
+}
 dependencies {
 
     implementation("androidx.appcompat:appcompat:1.7.0")
