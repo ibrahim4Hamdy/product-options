@@ -40,7 +40,8 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    implementation(project(":OptionSet"))
+   // implementation(project(":OptionSet"))
+    implementation("com.github.ibrahim4Hamdy:product-options:v0.0.2-alpha")
 
 
 }

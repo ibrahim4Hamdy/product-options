@@ -33,7 +33,6 @@ public class ImagePickerView extends HorizontalScrollView {
         super(context, attrs);
         this.context = context;
 
-        // قراءة الخصائص من XML
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ImagePickerView);
         TypedArray aa = context.obtainStyledAttributes(attrs, R.styleable.ColorPickerView);
 
@@ -45,19 +44,17 @@ public class ImagePickerView extends HorizontalScrollView {
         scrollbarVisibility = aa.getBoolean(R.styleable.ColorPickerView_scrollbarVisibility, false);
         typedArray.recycle();
 
-        // إخفاء أو إظهار شريط التمرير
         setHorizontalScrollBarEnabled(scrollbarVisibility);
 
-        // إعداد الحاوية
         container = new LinearLayout(context);
         container.setOrientation(LinearLayout.HORIZONTAL);
         container.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         addView(container);
     }
 
-    // إضافة الصور (محلية أو عبر الإنترنت)
+
     public void setImages(List<String> imageUrls) {
-        container.removeAllViews(); // مسح أي صور قديمة
+        container.removeAllViews();
         for (int i = 0; i < imageUrls.size(); i++) {
             ImageView imageView = createImageView(imageUrls.get(i), i);
             container.addView(imageView);
@@ -67,38 +64,30 @@ public class ImagePickerView extends HorizontalScrollView {
     private ImageView createImageView(String imageUrl, int index) {
         ImageView imageView = new ImageView(context);
 
-        // إعداد التصميم
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(boxWidth, boxHeight);
         params.setMargins(dpToPx(8), dpToPx(8), dpToPx(8), dpToPx(8));
         imageView.setLayoutParams(params);
         imageView.setPadding(dpToPx(10), dpToPx(10), dpToPx(10), dpToPx(10));
-        imageView.setBackground(createDefaultBackground()); // حدود افتراضية
+        imageView.setBackground(createDefaultBackground());
 
-        // تحميل الصورة (محلية أو من الإنترنت)
         if (imageUrl.startsWith("http")) {
-            // تحميل من الإنترنت باستخدام Glide أو Picasso
             Glide.with(context).load(imageUrl).into(imageView);
         } else {
-            // تحميل من الموارد المحلية
             int resId = getResources().getIdentifier(imageUrl, "drawable", context.getPackageName());
             imageView.setImageResource(resId);
         }
 
-        // التعامل مع النقر
         imageView.setOnClickListener(v -> selectImage(index));
         return imageView;
     }
 
 
-    // تحديد الصورة المختارة
     private void selectImage(int index) {
         if (selectedIndex != -1) {
-            // إزالة الحدود من الصورة السابقة
             ImageView previousImageView = (ImageView) container.getChildAt(selectedIndex);
             previousImageView.setBackground(createDefaultBackground());
         }
 
-        // إضافة حدود للصورة الجديدة
         ImageView currentImageView = (ImageView) container.getChildAt(index);
         currentImageView.setBackground(createSelectedBorder());
         selectedIndex = index;
@@ -110,17 +99,17 @@ public class ImagePickerView extends HorizontalScrollView {
 
     private Drawable createDefaultBackground() {
         GradientDrawable drawable = new GradientDrawable();
-        drawable.setColor(Color.TRANSPARENT); // خلفية شفافة
-        drawable.setCornerRadius(boxRadius); // زوايا مستديرة
-        drawable.setStroke(dpToPx(2), Color.LTGRAY); // حدود خفيفة
+        drawable.setColor(Color.TRANSPARENT);
+        drawable.setCornerRadius(boxRadius);
+        drawable.setStroke(dpToPx(2), Color.LTGRAY);
         return drawable;
     }
 
     private Drawable createSelectedBorder() {
         GradientDrawable drawable = new GradientDrawable();
-        drawable.setColor(Color.TRANSPARENT); // خلفية شفافة
-        drawable.setCornerRadius(boxRadius); // زوايا مستديرة
-        drawable.setStroke(dpToPx(3), selectedColor); // حدود بلون مميز
+        drawable.setColor(Color.TRANSPARENT);
+        drawable.setCornerRadius(boxRadius);
+        drawable.setStroke(dpToPx(3), selectedColor);
         return drawable;
     }
 

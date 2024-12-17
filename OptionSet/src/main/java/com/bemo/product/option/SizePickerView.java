@@ -22,12 +22,12 @@ public class SizePickerView extends HorizontalScrollView {
 
     private LinearLayout containerLayout;
     private final List<TextView> sizeTexts = new ArrayList<>();
-    private int selectedTextColor = Color.BLACK; // لون النص المحدد
-    private int defaultTextColor = Color.GRAY;  // لون النص الافتراضي
-    private int indicatorColor = Color.BLUE;   // لون المؤشر (الإطار)
-    private int defaultSelectedIndex = -1;     // الفهرس الافتراضي
-    private float textSize = 16;               // حجم النص الافتراضي
-    private float indicatorPadding = 8;        // المسافة بين النصوص والإطار
+    private int selectedTextColor = Color.BLACK;
+    private int defaultTextColor = Color.GRAY;
+    private int indicatorColor = Color.BLUE;
+    private int defaultSelectedIndex = -1;
+    private float textSize = 16;
+    private float indicatorPadding = 8;
     private int boxWidth =40;
     private int boxHeight =40;
     private int boxRadius =10;
@@ -40,7 +40,6 @@ public class SizePickerView extends HorizontalScrollView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        // قراءة السمات من XML
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.SizePickerView, 0, 0);
         TypedArray aa = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ColorPickerView, 0, 0);
 
@@ -59,20 +58,18 @@ public class SizePickerView extends HorizontalScrollView {
             a.recycle();
         }
 
-        // إعداد التخطيط
         setHorizontalScrollBarEnabled(false);
         containerLayout = new LinearLayout(getContext());
         containerLayout.setOrientation(LinearLayout.HORIZONTAL);
         addView(containerLayout);
 
-        // معاينة النصوص عند عرض XML
         if (isInEditMode()) {
             setSizes(new String[]{"S", "M", "L", "XL","2XL"});
         }
 
-        if (defaultSelectedIndex != -1) {
-          //  selectSize(defaultSelectedIndex);
-        }
+//        if (defaultSelectedIndex != -1) {
+//          //  selectSize(defaultSelectedIndex);
+//        }
     }
 
     public void setSizes(String[] sizes) {
@@ -85,7 +82,6 @@ public class SizePickerView extends HorizontalScrollView {
             sizeTexts.add(sizeTextView);
         }
 
-        // تحديد العنصر الافتراضي
         if (defaultSelectedIndex >= 0 && defaultSelectedIndex < sizes.length) {
             selectSize(defaultSelectedIndex);
         }
@@ -94,41 +90,37 @@ public class SizePickerView extends HorizontalScrollView {
     private TextView createSizeTextView(String size, int index) {
         TextView textView = new TextView(getContext());
 
-        // إعداد النص
         textView.setText(size);
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize); // حجم النص كبير
-        textView.setMaxLines(1); // تحديد سطر واحد للنص
-        textView.setEllipsize(TextUtils.TruncateAt.END); // إذا كان النص كبيرًا، تقليصه بنقاط
-        textView.setGravity(Gravity.CENTER); // توسيط النص
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, textSize);
+        textView.setMaxLines(1);
+        textView.setEllipsize(TextUtils.TruncateAt.END);
+        textView.setGravity(Gravity.CENTER);
         textView.setTextColor(defaultTextColor);
 
-        // إعداد التخطيط بحجم ثابت
-        int width = dpToPx(boxWidth); // تحويل 80dp إلى px
+        int width = dpToPx(boxWidth);
         int height = dpToPx(boxHeight);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(width, height);
-        params.setMargins(16, 16, 16, 16); // مسافة بين المربعات
+        params.setMargins(16, 16, 16, 16);
         textView.setLayoutParams(params);
 
-        // إعداد الخلفية الافتراضية
         textView.setBackground(createDefaultBackground());
 
-        // التعامل مع النقر
         textView.setOnClickListener(v -> selectSize(index));
         return textView;
     }
 
     private Drawable createDefaultBackground() {
         GradientDrawable drawable = new GradientDrawable();
-        drawable.setColor(Color.WHITE); // لون الخلفية الافتراضي
-        drawable.setCornerRadius(dpToPx(boxRadius)); // الزوايا المستديرة
-        drawable.setStroke(3, Color.LTGRAY); // الإطار بلون رمادي
+        drawable.setColor(Color.WHITE);
+        drawable.setCornerRadius(dpToPx(boxRadius));
+        drawable.setStroke(3, Color.LTGRAY);
         return drawable;
     }
 
     private Drawable createSelectedBackground() {
         GradientDrawable drawable = new GradientDrawable();
-        drawable.setColor(indicatorColor); // لون الخلفية المحددة (برتقالي)
-        drawable.setCornerRadius(dpToPx(boxRadius)); // الزوايا المستديرة
+        drawable.setColor(indicatorColor);
+        drawable.setCornerRadius(dpToPx(boxRadius));
         return drawable;
     }
 
@@ -136,7 +128,6 @@ public class SizePickerView extends HorizontalScrollView {
 
     public void selectSize(int index) {
         if (defaultSelectedIndex != -1 && defaultSelectedIndex < sizeTexts.size()) {
-            // إعادة النصوص السابقة للحالة الافتراضية
             TextView previousText = sizeTexts.get(defaultSelectedIndex);
             previousText.setTextColor(defaultTextColor);
             previousText.setBackground(createDefaultBackground());
@@ -144,9 +135,8 @@ public class SizePickerView extends HorizontalScrollView {
 
         defaultSelectedIndex = index;
 
-        // تمييز النص المحدد
         TextView selectedText = sizeTexts.get(defaultSelectedIndex);
-        selectedText.setTextColor(Color.WHITE); // النص المحدد بلون أبيض
+        selectedText.setTextColor(Color.WHITE);
         selectedText.setBackground(createSelectedBackground());
 
         if (sizeSelectedListener != null) {

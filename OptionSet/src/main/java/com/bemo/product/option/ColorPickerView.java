@@ -21,14 +21,14 @@ public class ColorPickerView extends HorizontalScrollView {
 
     private LinearLayout containerLayout;
     private final List<FrameLayout> colorCircles = new ArrayList<>();
-    private int indicatorColor = Color.BLACK; // لون المؤشر الافتراضي
-    private int defaultSelectedIndex = -1;    // لا يتم تحديد أي عنصر افتراضيًا
-    private int backgroundColor = Color.WHITE; // لون الخلفية الافتراضي
-    private boolean scrollbarVisibility = true; // إظهار شريط التمرير افتراضيًا
-    private float radius = 0; // زاوية الزوايا الدائرية
+    private int indicatorColor = Color.BLACK;
+    private int defaultSelectedIndex = -1;
+    private int backgroundColor = Color.WHITE;
+    private boolean scrollbarVisibility = true;
+    private float radius = 0;
 
-    private float circleSize = 48; // حجم الدائرة الافتراضي (بالـ dp)
-    private float indicatorSize = 56; // حجم المؤشر الافتراضي (بالـ dp)
+    private float circleSize = 48;
+    private float indicatorSize = 56;
     private OnColorSelectedListener colorSelectedListener;
 
     public ColorPickerView(Context context, @Nullable AttributeSet attrs) {
@@ -37,7 +37,7 @@ public class ColorPickerView extends HorizontalScrollView {
     }
 
     private void init(Context context, AttributeSet attrs) {
-        // قراءة السمات من XML
+        // Reade From XML
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.ColorPickerView, 0, 0);
         try {
             indicatorColor = a.getColor(R.styleable.ColorPickerView_indicatorColor, indicatorColor);
@@ -51,7 +51,7 @@ public class ColorPickerView extends HorizontalScrollView {
             a.recycle();
         }
 
-        // تطبيق الإعدادات
+        //
         setHorizontalScrollBarEnabled(scrollbarVisibility);
         setBackground(createRoundedBackground(backgroundColor, radius));
 
@@ -60,7 +60,7 @@ public class ColorPickerView extends HorizontalScrollView {
         containerLayout.setOrientation(LinearLayout.HORIZONTAL);
         addView(containerLayout);
 
-        // إعداد اللون الافتراضي عند معاينة XML
+        // preview in  XML
         if (isInEditMode()) {
             setColors(new int[]{
                     0xFFFF0000, // Red
@@ -69,9 +69,9 @@ public class ColorPickerView extends HorizontalScrollView {
                     0xFFFFFF00  // Yellow
             });
         }
-        if (defaultSelectedIndex != -1) {
-        //    selectColor(defaultSelectedIndex);
-        }
+//        if (defaultSelectedIndex != -1) {
+//            selectColor(defaultSelectedIndex);
+//        }
     }
     private Drawable createRoundedBackground(int color, float radius) {
         GradientDrawable drawable = new GradientDrawable();
@@ -89,7 +89,7 @@ public class ColorPickerView extends HorizontalScrollView {
             colorCircles.add(colorCircle);
         }
 
-        // تطبيق اللون الافتراضي
+        // Default selected color
         if (defaultSelectedIndex >= 0 && defaultSelectedIndex < colors.length) {
             selectColor(defaultSelectedIndex,colors[defaultSelectedIndex]);
         }
@@ -98,15 +98,16 @@ public class ColorPickerView extends HorizontalScrollView {
     private FrameLayout createColorCircle(int color, int index) {
         FrameLayout frameLayout = new FrameLayout(getContext());
 
-        // حجم الدائرة بناءً على `circleSize`
+        //  `circleSize`
         int size = (int) (getResources().getDisplayMetrics().density * circleSize);
-        int indicatorPadding = (int) (getResources().getDisplayMetrics().density * (indicatorSize)); // مساحة إضافية للمؤشر
+        int indicatorPadding = (int) (getResources().getDisplayMetrics().density * (indicatorSize));
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(indicatorPadding, indicatorPadding);
-        params.setMargins(10, 10, 10, 10); // المسافات بين الدوائر
+        //Distances between circles
+        params.setMargins(10, 10, 10, 10);
         frameLayout.setLayoutParams(params);
 
-        // الدائرة الأساسية
+        // main circle
         View circle = new View(getContext());
         FrameLayout.LayoutParams circleParams = new FrameLayout.LayoutParams(size, size);
         circleParams.gravity = Gravity.CENTER;
@@ -114,17 +115,17 @@ public class ColorPickerView extends HorizontalScrollView {
         circle.setBackground(createColorDrawable(color, false));
         frameLayout.addView(circle);
 
-        // المؤشر بناءً على `indicatorSize`
+        //  `indicatorSize`
         View indicator = new View(getContext());
         int indicatorActualSize = (int) (getResources().getDisplayMetrics().density * indicatorSize);
         FrameLayout.LayoutParams indicatorParams = new FrameLayout.LayoutParams(indicatorActualSize, indicatorActualSize);
         indicatorParams.gravity = Gravity.CENTER;
         indicator.setLayoutParams(indicatorParams);
         indicator.setBackground(createIndicatorDrawable(color));
-        indicator.setVisibility(View.INVISIBLE); // مخفي بشكل افتراضي
+        indicator.setVisibility(View.INVISIBLE);
         frameLayout.addView(indicator);
 
-        frameLayout.setTag(color); // حفظ اللون في الـ Tag
+        frameLayout.setTag(color);
         frameLayout.setOnClickListener(v -> selectColor(index,color));
 
         return frameLayout;
@@ -132,7 +133,7 @@ public class ColorPickerView extends HorizontalScrollView {
 
     private void selectColor(int index,int color) {
         if (defaultSelectedIndex != -1) {
-            // إزالة المؤشر من اللون السابق
+            // Remove the cursor from the previous color
             FrameLayout previousCircle = colorCircles.get(defaultSelectedIndex);
             View previousIndicator = previousCircle.getChildAt(1); // المؤشر هو الطفل الثاني
             previousIndicator.setVisibility(View.INVISIBLE);
@@ -140,9 +141,9 @@ public class ColorPickerView extends HorizontalScrollView {
 
         defaultSelectedIndex = index;
 
-        // إظهار المؤشر على اللون الحالي
+        // Show the cursor on the current color
         FrameLayout selectedCircle = colorCircles.get(defaultSelectedIndex);
-        View selectedIndicator = selectedCircle.getChildAt(1); // المؤشر هو الطفل الثاني
+        View selectedIndicator = selectedCircle.getChildAt(1);
         selectedIndicator.setVisibility(View.VISIBLE);
 
         if (colorSelectedListener != null) {
@@ -156,7 +157,8 @@ public class ColorPickerView extends HorizontalScrollView {
         drawable.setColor(color);
 
         if (isSelected) {
-            drawable.setStroke(8, color); // اللون المحدد نفس لون الدائرة
+            // The selected color is the same as the circle color
+            drawable.setStroke(8, color);
         }
         return drawable;
     }
@@ -164,14 +166,14 @@ public class ColorPickerView extends HorizontalScrollView {
     private GradientDrawable createIndicatorDrawable(int color) {
         GradientDrawable drawable = new GradientDrawable();
         drawable.setShape(GradientDrawable.OVAL);
-        drawable.setStroke(10, color); // جعل الحدود أكثر وضوحًا
-        drawable.setColor(0x00000000); // شفاف من الداخل
+        drawable.setStroke(10, color);
+        drawable.setColor(0x00000000);
         return drawable;
     }
 
     public void setIndicatorColor(int color) {
         this.indicatorColor = color;
-        invalidate(); // إعادة رسم العرض
+        invalidate();
     }
 
 //    public void setDefaultSelectedIndex(int index) {
